@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fahrzeug Reservation</title>
 
-  <!-- FullCalendar -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f5f5f5;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #e7dfcf;
+      color: #2f2a22;
     }
 
     .login-screen {
@@ -22,140 +21,241 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: #e9ecef;
+      background: #e7dfcf;
     }
 
     .login-box {
-      background: white;
+      background: #fffaf0;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
       width: 320px;
+      border: 1px solid #d7c7a6;
     }
 
     .login-box h2 {
       margin-top: 0;
-      color: #1f5f1f;
+      color: #2f5f2f;
     }
 
     .login-box input {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      border: 1px solid #cbb98f;
+      border-radius: 10px;
       box-sizing: border-box;
+      font-size: 16px;
     }
 
     .login-box button {
       width: 100%;
       margin-top: 15px;
-      padding: 12px;
-      background: #1f5f1f;
+      padding: 13px;
+      background: #2f5f2f;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 16px;
     }
 
-    .login-box button:hover {
-      background: #2d7a2d;
-    }
-
     #calendar-container {
       display: none;
-      padding: 20px;
+      padding: 18px;
+      max-width: 1200px;
+      margin: auto;
     }
 
     h1 {
-      color: #1f5f1f;
+      text-align: center;
+      color: #2f5f2f;
+      margin-bottom: 20px;
     }
 
     #calendar {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #fffaf0;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid #d7c7a6;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.16);
     }
 
-    /* Modal */
+    .fc {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .fc .fc-toolbar-title {
+      font-size: 24px;
+      color: #3b3428;
+    }
+
+    .fc .fc-button {
+      background: #efe2c5 !important;
+      color: #2f2a22 !important;
+      border: 1px solid #cdbb93 !important;
+      border-radius: 12px !important;
+      box-shadow: none !important;
+      padding: 8px 12px !important;
+    }
+
+    .fc .fc-button-active {
+      background: #d8c395 !important;
+    }
+
+    .fc-theme-standard .fc-scrollgrid,
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+      border-color: #e2d3b4 !important;
+    }
+
+    .fc-col-header-cell {
+      background: #f3e7cb;
+      padding: 8px 0;
+    }
+
+    .fc-col-header-cell-cushion {
+      color: #3b3428;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .fc-daygrid-day {
+      background: #fffdf7;
+    }
+
+    .fc-daygrid-day-number {
+      color: #5a4b35;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px;
+    }
+
+    .fc-day-today {
+      background: #fff0bd !important;
+    }
+
+    .fc-event {
+      border: none !important;
+      border-radius: 12px !important;
+      padding: 5px 7px !important;
+      font-size: 13px !important;
+      font-weight: bold;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+      margin: 3px;
+    }
+
+    .fc-event-title,
+    .fc-event-time {
+      color: white;
+    }
+
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
+      z-index: 9999;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.45);
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
-      background: white;
+      background: #fffaf0;
       padding: 25px;
-      width: 400px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      width: 420px;
+      max-width: 90%;
+      border-radius: 18px;
+      border: 1px solid #d7c7a6;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
     }
 
     .modal-content h2 {
       margin-top: 0;
-      color: #1f5f1f;
+      color: #2f5f2f;
     }
 
     .modal-content label {
       display: block;
-      margin-top: 10px;
+      margin-top: 12px;
       font-weight: bold;
     }
 
     .modal-content input,
     .modal-content select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      border-radius: 10px;
+      border: 1px solid #cbb98f;
       box-sizing: border-box;
+      font-size: 16px;
     }
 
     .modal-buttons {
       display: flex;
       justify-content: flex-end;
-      margin-top: 20px;
+      margin-top: 22px;
       gap: 10px;
     }
 
     .btn {
-      padding: 10px 18px;
+      padding: 11px 18px;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .btn-save {
-      background: #1f5f1f;
+      background: #2f5f2f;
       color: white;
     }
 
     .btn-cancel {
-      background: #ccc;
+      background: #d6c7a8;
     }
 
-    .fc-event {
-      border: none !important;
-      padding: 2px 4px;
-      font-size: 13px;
+    @media (max-width: 700px) {
+      #calendar-container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      #calendar {
+        padding: 10px;
+        border-radius: 16px;
+      }
+
+      .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .fc .fc-toolbar-title {
+        font-size: 20px;
+      }
+
+      .fc .fc-button {
+        font-size: 13px !important;
+        padding: 7px 9px !important;
+      }
+
+      .fc-daygrid-day {
+        min-height: 85px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- LOGIN -->
   <div class="login-screen" id="loginScreen">
     <div class="login-box">
       <h2>Geschützter Zugang</h2>
@@ -166,13 +266,11 @@
     </div>
   </div>
 
-  <!-- CALENDAR -->
   <div id="calendar-container">
     <h1>Agenda für Fahrzeuge ER</h1>
     <div id="calendar"></div>
   </div>
 
-  <!-- MODAL -->
   <div class="modal" id="reservationModal">
     <div class="modal-content">
       <h2>Neue Reservation</h2>
@@ -200,23 +298,9 @@
   </div>
 
   <script>
-
-    // PASSWORT
     const PASSWORD = "Fz2_2026!";
+    let calendar;
 
-    function checkPassword() {
-      const input = document.getElementById('passwordInput').value;
-      const error = document.getElementById('loginError');
-
-      if (input === PASSWORD) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('calendar-container').style.display = 'block';
-      } else {
-        error.textContent = 'Falsches Passwort!';
-      }
-    }
-
-    // Fahrzeuge + Farben
     const vehicles = [
       { name: 'M113 001', color: '#ff4d4d' },
       { name: 'M113 002', color: '#4d79ff' },
@@ -239,7 +323,6 @@
       { name: 'DURO 405 Trp', color: '#c0392b' }
     ];
 
-    // Dropdown füllen
     const vehicleSelect = document.getElementById('vehicleSelect');
 
     vehicles.forEach(vehicle => {
@@ -249,34 +332,68 @@
       vehicleSelect.appendChild(option);
     });
 
-    let selectedStart = null;
-    let selectedEnd = null;
-    let calendar;
+    function checkPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const error = document.getElementById('loginError');
 
-    document.addEventListener('DOMContentLoaded', function () {
+      if (input === PASSWORD) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('calendar-container').style.display = 'block';
 
+        if (!calendar) {
+          initCalendar();
+        } else {
+          calendar.updateSize();
+        }
+      } else {
+        error.textContent = 'Falsches Passwort!';
+      }
+    }
+
+    function initCalendar() {
       const calendarEl = document.getElementById('calendar');
 
       calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek',
+        initialView: window.innerWidth < 700 ? 'dayGridMonth' : 'dayGridMonth',
         locale: 'de',
         firstDay: 1,
-        selectable: true,
-        editable: false,
         height: 'auto',
-        slotMinTime: '00:00:00',
-        slotMaxTime: '24:00:00',
-        nowIndicator: true,
-        allDaySlot: false,
+        selectable: true,
+        longPressDelay: 100,
+        selectLongPressDelay: 100,
+        eventLongPressDelay: 100,
 
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'timeGridWeek,timeGridDay'
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+
+        buttonText: {
+          today: 'Heute',
+          month: 'Monat',
+          week: 'Woche',
+          day: 'Tag'
+        },
+
+        dateClick: function(info) {
+          const startDate = new Date(info.date);
+          startDate.setHours(8, 0, 0, 0);
+
+          const endDate = new Date(startDate);
+          endDate.setHours(17, 0, 0, 0);
+
+          openModal(startDate, endDate);
         },
 
         select: function(info) {
-          openModal(info.startStr, info.endStr);
+          const startDate = new Date(info.start);
+          startDate.setHours(8, 0, 0, 0);
+
+          const endDate = new Date(info.end);
+          endDate.setHours(17, 0, 0, 0);
+
+          openModal(startDate, endDate);
         },
 
         eventClick: function(info) {
@@ -295,41 +412,33 @@
       });
 
       calendar.render();
-    });
+    }
 
     function openModal(start, end) {
-      selectedStart = start;
-      selectedEnd = end;
-
       document.getElementById('startDate').value = formatDateForInput(start);
       document.getElementById('endDate').value = formatDateForInput(end);
-
       document.getElementById('reservationModal').style.display = 'flex';
     }
 
     function closeModal() {
       document.getElementById('reservationModal').style.display = 'none';
-
       document.getElementById('personName').value = '';
       document.getElementById('phoneNumber').value = '';
     }
 
-    function formatDateForInput(dateString) {
-      const date = new Date(dateString);
-      const offset = date.getTimezoneOffset();
-      const localDate = new Date(date.getTime() - offset * 60000);
+    function formatDateForInput(date) {
+      const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
       return localDate.toISOString().slice(0,16);
     }
 
     function saveReservation() {
-
       const start = document.getElementById('startDate').value;
       const end = document.getElementById('endDate').value;
       const person = document.getElementById('personName').value;
       const phone = document.getElementById('phoneNumber').value;
       const vehicle = document.getElementById('vehicleSelect').value;
 
-      if (!person || !phone) {
+      if (!start || !end || !person || !phone || !vehicle) {
         alert('Bitte alle Felder ausfüllen!');
         return;
       }
@@ -347,10 +456,8 @@
         }
       };
 
-      // Im Kalender anzeigen
       calendar.addEvent(newEvent);
 
-      // Im LocalStorage speichern
       const savedEvents = JSON.parse(localStorage.getItem('vehicleReservations')) || [];
       savedEvents.push(newEvent);
       localStorage.setItem('vehicleReservations', JSON.stringify(savedEvents));
@@ -358,14 +465,12 @@
       closeModal();
     }
 
-    // Modal schließen wenn außerhalb geklickt wird
     window.onclick = function(event) {
       const modal = document.getElementById('reservationModal');
       if (event.target === modal) {
         closeModal();
       }
     }
-
   </script>
 </body>
 </html>
